@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState } from "react";
+import { MouseEvent, ReactNode, useRef, useState } from "react";
 import { TiLocationArrow } from "react-icons/ti";
 
 interface IBentoTilt {
@@ -8,11 +8,24 @@ interface IBentoTilt {
 
 const BentoTilt = ({ children, className = "" }: IBentoTilt) => {
   const [transformStyle, setTransformStyle] = useState("");
-  const itemRef = useRef(null);
+  const itemRef = useRef<HTMLDivElement | null>(null);
 
-  const handleMouseMove = (e) => { }
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!itemRef.current) return;
 
-  const handleMouseLeave = (e) => {
+    const { left, top, width, height } = itemRef.current.getBoundingClientRect();
+    const relativeX = (e.clientX - left) / width;
+    const relativeY = (e.clientX - top) / height;
+
+    const tiltX = (relativeX - 0.5) * 5;
+    const tiltY = (relativeY - 0.5) * 5;
+
+    const newTransform = `perspective(700px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(0.98, 0.98, 0.98)`;
+
+    setTransformStyle(newTransform)
+  }
+
+  const handleMouseLeave = () => {
     setTransformStyle("");
   }
 
@@ -74,12 +87,12 @@ const Features = () => {
           <BentoTilt className="bento-tilt_1 me-14 md:col-span-1 md:me-0">
             <BentoCard src="videos/feature-4.mp4" title={<>az<b>u</b>le</>} description="A cross-world AI Agent - elevating your gameplay to be more fun and productive." />
           </BentoTilt>
-          <div className="bento-tilt_2">
+          <BentoTilt className="bento-tilt_2">
             <div className="flex size-full flex-col justify-between bg-violet-300 p-5">
               <h1 className="bento-title special-font max-w-64 text-black">M<b>o</b>re co<b>m</b>ing s<b>o</b>on!</h1>
               <TiLocationArrow className="m-5 scale-[5] self-end" />
             </div>
-          </div>
+          </BentoTilt>
           <BentoTilt className="bento-tilt_2">
             <video
               src="videos/feature-5.mp4"
