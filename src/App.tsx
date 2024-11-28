@@ -1,4 +1,5 @@
 import About from "./compnents/About"
+import Features from "./compnents/Features"
 import Hero from "./compnents/Hero"
 import Navbar from "./compnents/Navbar"
 
@@ -8,6 +9,7 @@ const App = () => {
       <Navbar />
       <Hero />
       <About />
+      <Features />
     </main>
   )
 }
