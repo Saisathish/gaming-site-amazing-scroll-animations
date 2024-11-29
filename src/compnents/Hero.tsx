@@ -14,7 +14,7 @@ const Hero = () => {
   const [loadedVideos, setLoadedVideos] = useState(0);
 
   const totalVideos = 4;
-  const nextVdRef = useRef(null);
+  const nextVdRef = useRef<HTMLVideoElement | null>(null);
   const upcomingVideoIndex = (currentIndex % totalVideos) + 1;
 
   const handleMiniVdClick = () => {
@@ -45,7 +45,14 @@ const Hero = () => {
         height: "100%",
         duration: 1,
         ease: 'power1.inOut',
-        onStart: () => nextVdRef.current?.play()
+        onStart: () => {
+          const video = nextVdRef.current;
+          if (video) {
+            video.play().catch((error) => {
+              console.error("Video play error:", error);
+            });
+          }
+        }
       })
       gsap.from("#current-video", {
         transformOrigin: "center center",
