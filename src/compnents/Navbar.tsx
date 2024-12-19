@@ -7,7 +7,7 @@ import gsap from "gsap";
 const Navbar = () => {
   const navContainerRef = useRef<HTMLDivElement | null>(null);
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
-  const navItems = ["Nexus", "Vault", "Prolugue", "About", "Contact"];
+  const navItems = ["About", "Nexus", "Prolugue", "Contact"];
   const [isAUdioPlaying, setIsAUdioPlaying] = useState(false);
   const [isIndicatorActve, setIsIndicatorActve] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
